@@ -20,6 +20,7 @@ private:
     QVariantMap testLocation();
     QVariantMap testContacts();
     QVariantMap testTextMessages();
+    QVariantMap testRecordAudio();
 #if 0
     QVariantMap testPhone();
     QVariantMap testEmailMessages();

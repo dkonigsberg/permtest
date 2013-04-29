@@ -110,6 +110,7 @@
     <permission>bbm_connect</permission>
     <permission>access_pimdomain_messages</permission>
     <permission>access_pimdomain_notebooks</permission>
+    <permission>record_audio</permission>
     <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib"/>
 
 </qnx>

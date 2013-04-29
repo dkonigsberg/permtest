@@ -11,6 +11,9 @@
 #include <bb/PpsObject>
 #include <bb/PpsOpenMode>
 
+#include <sys/asoundlib.h>
+#include <errno.h>
+
 using namespace bb::cascades;
 
 PermTest::PermTest(bb::cascades::Application *app)
@@ -30,6 +33,7 @@ PermTest::PermTest(bb::cascades::Application *app)
     dataModel->append(testLocation());
     dataModel->append(testContacts());
     dataModel->append(testTextMessages());
+    dataModel->append(testRecordAudio());
 #if 0
     dataModel->append(testPhone());
     dataModel->append(testEmailMessages());
@@ -115,6 +119,25 @@ QVariantMap PermTest::testTextMessages()
     bool sms_connector = testPpsObject("/pps/services/chat/sms_connector");
     item["enabled"] = control_options || sms_connector;
 
+    return item;
+}
+
+QVariantMap PermTest::testRecordAudio()
+{
+    QVariantMap item;
+    item["label"] = "Microphone";
+    item["name"] = "record_audio";
+
+    snd_pcm_t *pcm_handle;
+    int ret = snd_pcm_open_name(&pcm_handle, (char*)"voice", SND_PCM_OPEN_CAPTURE);
+    if(ret == -ENOENT) {
+        item["enabled"] = false;
+    }
+    else {
+        item["enabled"] = true;
+    }
+
+    snd_pcm_close(pcm_handle);
     return item;
 }
 
